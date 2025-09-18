@@ -107,32 +107,36 @@ function drawRadar(values) {
   }
 
   // Draw radar shape with group-specific colors
-  ctx.beginPath();
   let questionIndex = 0;
   groups.forEach((group) => {
     QUESTIONS[group].forEach((_, questionIdx) => {
-      const angle = -Math.PI / 2 + questionIndex * step;
-      const value = state[group][questionIdx] ? state[group][questionIdx] / 5 : 0;
-      const x = Math.cos(angle) * radius * value;
-      const y = Math.sin(angle) * radius * value;
+      const angle1 = -Math.PI / 2 + questionIndex * step;
+      const value1 = state[group][questionIdx] ? state[group][questionIdx] / 5 : 0;
+      const x1 = Math.cos(angle1) * radius * value1;
+      const y1 = Math.sin(angle1) * radius * value1;
 
-      if (questionIndex === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
+      const nextQuestionIndex = (questionIndex + 1) % totalQuestions;
+      const nextGroup = groups.find((g, idx) => {
+        const questionCount = QUESTIONS[g].length;
+        return nextQuestionIndex < questionCount + groups.slice(0, idx).reduce((sum, g) => sum + QUESTIONS[g].length, 0);
+      });
+      const nextQuestionIdx = nextQuestionIndex - groups.slice(0, groups.indexOf(nextGroup)).reduce((sum, g) => sum + QUESTIONS[g].length, 0);
+      const angle2 = -Math.PI / 2 + nextQuestionIndex * step;
+      const value2 = state[nextGroup][nextQuestionIdx] ? state[nextGroup][nextQuestionIdx] / 5 : 0;
+      const x2 = Math.cos(angle2) * radius * value2;
+      const y2 = Math.sin(angle2) * radius * value2;
 
-      // Set the stroke color based on the group
+      // Draw the line segment
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
       ctx.strokeStyle = groupColors[group];
       ctx.lineWidth = 2;
+      ctx.stroke();
 
       questionIndex++;
     });
   });
-  ctx.closePath();
-  ctx.stroke(); // Apply the colored stroke
-  ctx.fillStyle = 'rgba(139,92,246,0.3)';
-  ctx.fill();
 
   ctx.restore();
 }
@@ -140,9 +144,13 @@ function drawRadar(values) {
 function renderSummary(avgs) {
   summary.innerHTML = '';
   groups.forEach((g, i) => {
+    const totalQuestions = QUESTIONS[g].length;
+    const totalScore = state[g].reduce((a, b) => a + (b || 0), 0); // Calculate total score for the group
+    const maxScore = totalQuestions * 5; // Maximum possible score for the group
+    const percentage = ((totalScore / maxScore) * 100).toFixed(1); // Calculate percentage and round to 1 decimal place
     const pill = document.createElement('div');
     pill.className = 'px-2 py-1 rounded-full bg-slate-700 text-xs';
-    pill.textContent = `${g}: ${(avgs[i] * 5).toFixed(1)}/5`;
+    pill.textContent = `${g}: ${percentage}%`; // Display percentage
     summary.appendChild(pill);
   });
 }
