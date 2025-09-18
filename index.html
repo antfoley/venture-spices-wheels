@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SPICES Wheel — Venture Self-Assessment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-b from-slate-900 to-slate-800 text-slate-100 font-sans min-h-screen">
+  <div class="max-w-5xl mx-auto p-4 space-y-4">
+    <header class="text-center space-y-1">
+      <h1 class="text-lg font-bold">SPICES Wheel — Venture Self-Assessment</h1>
+      <p class="text-sm text-slate-400">Answer the questions, view your wheel, then screenshot or download it for your programme.</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Questions -->
+      <section class="bg-slate-800/50 rounded-xl shadow-lg p-4 flex flex-col">
+        <div class="flex justify-between items-center mb-2">
+          <strong id="currentGroupTitle" class="text-base">Social</strong>
+          <span id="progress" class="text-xs text-slate-400">0/0 answered</span>
+        </div>
+        <div id="questionList" class="overflow-y-auto flex-1 space-y-2 pr-1"></div>
+        <div class="flex justify-between items-center mt-3 gap-2">
+          <div class="space-x-2">
+            <button id="prevGroup" class="px-3 py-1 rounded-lg bg-slate-700 text-slate-300">◀ Prev</button>
+            <button id="nextGroup" class="px-3 py-1 rounded-lg bg-slate-700 text-slate-300">Next ▶</button>
+          </div>
+          <button id="showWheel" class="px-4 py-1.5 rounded-lg bg-violet-500 text-black font-semibold">Show Wheel</button>
+        </div>
+      </section>
+
+      <!-- Chart -->
+      <aside class="bg-slate-800/50 rounded-xl shadow-lg p-4 flex flex-col items-center">
+        <canvas id="wheelCanvas" width="360" height="360" class="w-full max-w-xs"></canvas>
+        <div id="summary" class="flex flex-wrap justify-center gap-2 mt-2 text-sm"></div>
+        <div class="flex gap-2 mt-3">
+          <button id="downloadPNG" class="px-3 py-1 rounded-lg bg-violet-500 text-black font-semibold">Download</button>
+          <button id="screenshotMode" class="px-3 py-1 rounded-lg bg-slate-700 text-slate-300">Screenshot view</button>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="text-center text-xs text-slate-500">Tip: rotate your phone to landscape for a better view.</footer>
+  </div>
+
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
