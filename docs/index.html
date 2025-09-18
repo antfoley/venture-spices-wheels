@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPICES Wheel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Screenshot mode hides questions and header */
+    .screenshot-mode header,
+    .screenshot-mode #questions {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen flex flex-col items-center">
+
+  <!-- Header -->
+  <header class="w-full flex justify-between items-center px-4 py-4 bg-white shadow-md">
+    <div class="text-center flex-1">
+      <h1 class="text-2xl font-extrabold text-gray-800">SPICES Wheel</h1>
+      <p class="text-sm text-gray-500">Venture Scouts • Ireland</p>
+    </div>
+    <button id="screenshotBtn"
+      class="ml-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow">
+      Screenshot Mode
+    </button>
+  </header>
+
+  <!-- Wheel -->
+  <main class="flex flex-col items-center w-full max-w-2xl px-4 py-6">
+    <div class="w-full flex justify-center">
+      <canvas id="wheel" class="mb-6 drop-shadow-md bg-white rounded-full w-full max-w-sm h-auto"></canvas>
+    </div>
+    <!-- Questions -->
+    <div id="questions" class="w-full space-y-6"></div>
+  </main>
+  
+
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+  <script>
+    // Render questions dynamically
+    const questionsDiv = document.getElementById("questions");
+
+    Object.entries(QUESTIONS).forEach(([spice, qs]) => {
+      const spiceBlock = document.createElement("div");
+      spiceBlock.className =
+        "bg-white p-5 rounded-2xl shadow-lg border border-gray-100";
+
+      const header = document.createElement("h2");
+      header.className =
+        "text-lg font-semibold mb-4 text-gray-800 border-b pb-2";
+      header.textContent = spice;
+      spiceBlock.appendChild(header);
+
+      qs.forEach((q, i) => {
+        const qDiv = document.createElement("div");
+        qDiv.className = "mb-4";
+
+        const qText = document.createElement("p");
+        qText.textContent = q;
+        qText.className = "text-sm text-gray-700 mb-2";
+        qDiv.appendChild(qText);
+
+        const btnRow = document.createElement("div");
+        btnRow.className = "flex gap-2";
+
+        for (let v = 1; v <= 5; v++) {
+          const btn = document.createElement("button");
+          btn.textContent = v;
+          btn.className =
+            "flex-1 py-2 rounded-lg text-sm font-medium border transition " +
+            "border-gray-300 bg-gray-100 text-gray-700 hover:bg-blue-100 hover:border-blue-400";
+          btn.onclick = () => {
+            setAnswer(spice, i, v);
+
+            // highlight selection
+            Array.from(btnRow.children).forEach(b =>
+              b.classList.remove("bg-blue-500", "text-white", "border-blue-500")
+            );
+            btn.classList.add("bg-blue-500", "text-white", "border-blue-500");
+          };
+          btnRow.appendChild(btn);
+        }
+
+        qDiv.appendChild(btnRow);
+        spiceBlock.appendChild(qDiv);
+      });
+
+      questionsDiv.appendChild(spiceBlock);
+    });
+
+    // Screenshot mode toggle
+    document.getElementById("screenshotBtn").addEventListener("click", () => {
+      document.body.classList.toggle("screenshot-mode");
+    });
+  </script>
+</body>
+</html>
