@@ -14,6 +14,11 @@
       <p class="text-sm text-slate-400">Answer the questions, view your wheel, then screenshot or download it for your programme.</p>
     </header>
 
+    <div id="auth-links" class="text-center">
+        <button id="login-btn" class="px-3 py-1 rounded-lg bg-slate-700 text-slate-300">Login</button>
+        <button id="register-btn" class="px-3 py-1 rounded-lg bg-slate-700 text-slate-300">Register</button>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <!-- Questions -->
       <section class="bg-slate-800/50 rounded-xl shadow-lg p-4 flex flex-col">
@@ -44,6 +49,54 @@
 
     <footer class="text-center text-xs text-slate-500">Tip: rotate your phone to landscape for a better view.</footer>
   </div>
+
+  <!-- Login Modal -->
+    <div id="login-modal" class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-slate-800 p-8 rounded-lg">
+            <h2 class="text-2xl font-bold mb-4">Login</h2>
+            <form id="login-form">
+                <div class="mb-4">
+                    <label for="login-email" class="block mb-2">Email</label>
+                    <input type="email" id="login-email" class="w-full p-2 rounded bg-slate-700">
+                </div>
+                <div class="mb-4">
+                    <label for="login-password" class="block mb-2">Password</label>
+                    <input type="password" id="login-password" class="w-full p-2 rounded bg-slate-700">
+                </div>
+                <button type="submit" class="w-full bg-violet-500 text-black font-semibold p-2 rounded">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="register-modal" class="hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-slate-800 p-8 rounded-lg">
+            <h2 class="text-2xl font-bold mb-4">Register</h2>
+            <form id="register-form">
+                <div class="mb-4">
+                    <label for="register-email" class="block mb-2">Email</label>
+                    <input type="email" id="register-email" class="w-full p-2 rounded bg-slate-700">
+                </div>
+                <div class="mb-4">
+                    <label for="register-password" class="block mb-2">Password</label>
+                    <input type="password" id="register-password" class="w-full p-2 rounded bg-slate-700">
+                </div>
+                <div class="mb-4">
+                    <label for="register-provience" class="block mb-2">Provience</label>
+                    <input type="text" id="register-provience" class="w-full p-2 rounded bg-slate-700">
+                </div>
+                <div class="mb-4">
+                    <label for="register-county" class="block mb-2">County</label>
+                    <input type="text" id="register-county" class="w-full p-2 rounded bg-slate-700">
+                </div>
+                <div class="mb-4">
+                    <label for="register-group" class="block mb-2">Group</label>
+                    <input type="text" id="register-group" class="w-full p-2 rounded bg-slate-700">
+                </div>
+                <button type="submit" class="w-full bg-violet-500 text-black font-semibold p-2 rounded">Register</button>
+            </form>
+        </div>
+    </div>
 
   <script src="questions.js"></script>
   <script src="script.js"></script>
